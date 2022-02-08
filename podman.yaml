@@ -2,10 +2,12 @@ cpus: 4
 memory: 8GiB
 disk: 100GiB
 images:
-- location: "https://cloud-images.ubuntu.com/impish/current/impish-server-cloudimg-amd64.img"
+- location: "https://download.fedoraproject.org/pub/fedora/linux/releases/35/Cloud/x86_64/images/Fedora-Cloud-Base-35-1.2.x86_64.qcow2"
   arch: "x86_64"
-- location: "https://cloud-images.ubuntu.com/impish/current/impish-server-cloudimg-arm64.img"
+  digest: "sha256:fe84502779b3477284a8d4c86731f642ca10dd3984d2b5eccdf82630a9ca2de6"
+- location: "https://download.fedoraproject.org/pub/fedora/linux/releases/35/Cloud/aarch64/images/Fedora-Cloud-Base-35-1.2.aarch64.qcow2"
   arch: "aarch64"
+  digest: "sha256:c71f2e6ce75b516d565e2c297ea9994c69b946cb3eaa0a4bbea400dbd6f59ae6"
 mounts:
 - location: "~"
   writable: true
@@ -20,9 +22,7 @@ provision:
     #!/bin/bash
     set -eux -o pipefail
     command -v podman >/dev/null 2>&1 && exit 0
-    export DEBIAN_FRONTEND=noninteractive
-    apt-get update
-    apt-get install -y podman crun
+    dnf install -y podman crun
 - mode: user
   script: |
     #!/bin/bash
